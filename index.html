@@ -1,0 +1,1102 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Checklist Công việc Khoa Khám bệnh | BV Sản Nhi Ninh Bình</title>
+<style>
+:root{
+  --sw:260px;
+  --ink:#1e1b4b;
+  --pri:#4338ca;
+  --pri2:#eef2ff;
+  --acc:#f59e0b;
+  --ok:#059669;
+  --okbg:#d1fae5;
+  --bad:#dc2626;
+  --badbg:#fee2e2;
+  --na:#64748b;
+  --nabg:#e2e8f0;
+  --warn:#b45309;
+  --warnbg:#fef3c7;
+  --line:#e2e4f3;
+  --bg:#f4f5fb;
+  --card:#fff;
+  --mut:#5f6585;
+  --sh:0 1px 3px rgba(30,27,75,.05),0 4px 16px rgba(30,27,75,.05);
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --ink:#e5e7ff;--pri:#a5b4fc;--pri2:#26285a;
+    --ok:#34d399;--okbg:#064e3b;--bad:#f87171;--badbg:#521b1b;
+    --na:#94a3b8;--nabg:#334155;--warn:#fcd34d;--warnbg:#4a3508;
+    --line:#32355f;--bg:#0f1027;--card:#1a1c3c;--mut:#a3a8c8;
+    --sh:0 1px 3px rgba(0,0,0,.3);
+  }
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font:14.50px/1.5 Arial,Helvetica,sans-serif}
+button,select,input,textarea{font:inherit;color:inherit}
+svg{display:block}
+
+/* Sidebar */
+aside{position:fixed;inset:0 auto 0 0;width:var(--sw);background:linear-gradient(175deg,#1e1b4b 0%,#312e81 60%,#4c1d95 100%);color:#e0e7ff;display:flex;flex-direction:column;z-index:30;transition:transform .25s}
+.brand{display:flex;gap:10px;align-items:center;padding:18px 16px 14px;border-bottom:1px solid rgba(255,255,255,.1)}
+.logo{width:38px;height:38px;border-radius:11px;background:#f59e0b;display:grid;place-items:center;color:#1e1b4b;font-weight:bold;font-size:18px}
+.brand b{display:block;font-size:15px;color:#fff;line-height:1.2}
+.brand small{opacity:.75;font-size:11.5px}
+.grp{font-size:10.5px;letter-spacing:.08em;opacity:.6;padding:14px 18px 4px;text-transform:uppercase}
+.nav{display:flex;align-items:center;gap:11px;width:calc(100% - 20px);margin:2px 10px;padding:10px 12px;border:0;border-radius:10px;background:none;color:inherit;cursor:pointer;text-align:left;font-size:13.5px}
+.nav:hover{background:rgba(255,255,255,.09)}
+.nav.on{background:rgba(255,255,255,.18);color:#fff;font-weight:bold;box-shadow:inset 3px 0 0 #f59e0b}
+.nav svg{flex:none;opacity:.85}
+.sf{margin-top:auto;padding:14px 16px;border-top:1px solid rgba(255,255,255,.14);font-size:12.5px}
+
+.ov{position:fixed;inset:0;background:rgba(15,16,39,.5);z-index:25;display:none}
+.wrap{margin-left:var(--sw);min-height:100vh;display:flex;flex-direction:column}
+.top{position:sticky;top:0;z-index:10;display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding:12px 24px;background:var(--card);border-bottom:1px solid var(--line)}
+.top h2{margin:0;font-size:18px;flex:1 1 180px}
+.menu{display:none}
+main{max-width:1280px;width:100%;margin:0 auto;padding:20px 24px 80px}
+
+/* Controls */
+select,input[type=date],input[type=text],textarea{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:8px 12px;max-width:100%}
+textarea{width:100%;min-height:44px;resize:vertical}
+.btn{border:1px solid var(--pri);background:var(--card);color:var(--pri);border-radius:10px;padding:7px 14px;cursor:pointer;white-space:nowrap;font-weight:600;font-size:13px;display:inline-flex;align-items:center;gap:6px}
+.btn:hover{background:var(--pri2)}
+.btn.fill{background:var(--pri);color:#fff}
+@media (prefers-color-scheme:dark){.btn.fill{color:#0f1027}}
+.btn.ok{border-color:var(--ok);color:var(--ok)}
+.btn.ok:hover{background:var(--okbg)}
+.btn.bad{border-color:var(--bad);color:var(--bad)}
+.btn.bad:hover{background:var(--badbg)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.ib{padding:7px 10px}
+
+/* Cards & Layout */
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px;margin:0 0 20px;box-shadow:var(--sh)}
+.card h3{margin:0 0 6px;font-size:16px}
+.card h4.t{margin:0 0 10px;font-size:14px}
+.mut{color:var(--mut);font-size:13px}
+.pill{display:inline-block;border-radius:99px;padding:2px 10px;font-size:12px;background:var(--pri2);color:var(--pri);font-weight:600}
+.pill.ok{background:var(--okbg);color:var(--ok)}.pill.bad{background:var(--badbg);color:var(--bad)}.pill.warn{background:var(--warnbg);color:var(--warn)}.pill.na{background:var(--nabg);color:var(--na)}
+
+/* KPIs Grid */
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin:0 0 20px}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;box-shadow:var(--sh);position:relative;overflow:hidden}
+.kpi:before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--c,var(--pri))}
+.kpi span{font-size:12px;color:var(--mut);font-weight:500}
+.kpi b{display:block;font-size:28px;line-height:1.2;margin:4px 0 2px}
+.kpi small{color:var(--mut);font-size:12px}
+
+.g2{display:grid;grid-template-columns:repeat(auto-fit,minmax(420px,1fr));gap:20px;margin:0 0 20px}
+.g2>.card{margin:0}
+
+/* Progress & Bars */
+.sb{display:flex;height:12px;border-radius:99px;overflow:hidden;background:var(--nabg)}
+.sb i{display:block;height:100%}
+.prog{height:8px;border-radius:99px;background:var(--nabg);overflow:hidden;min-width:80px}
+.prog>i{display:block;height:100%;background:linear-gradient(90deg,var(--pri),#a855f7)}
+
+/* Tables */
+table{border-collapse:collapse;width:100%;font-size:13.5px}
+th,td{border-bottom:1px solid var(--line);padding:10px 10px;text-align:left;vertical-align:middle}
+th{font-size:11.5px;color:var(--mut);background:#f8fafc;font-weight:600;text-transform:uppercase;letter-spacing:.04em}
+@media(prefers-color-scheme:dark){th{background:#232550}}
+.tw{overflow-x:auto}
+
+/* Checklist items */
+.slot{border-top:1px dashed var(--line);margin-top:14px;padding-top:12px}
+.slot:first-of-type{border-top:0;margin-top:0;padding-top:0}
+.slot h4{margin:0 0 4px;font-size:14px;color:var(--pri)}
+.std{font-size:13px;color:var(--mut);margin:2px 0 8px}
+.task{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:flex-start;padding:10px 12px;background:var(--bg);border-radius:10px;margin-bottom:8px;border:1px solid var(--line)}
+.tt{flex:1 1 280px;font-size:13.5px}
+.btns{display:flex;gap:5px}
+.btns button{border:1px solid var(--line);background:var(--card);border-radius:8px;padding:6px 12px;cursor:pointer;font-weight:600;font-size:12.5px;min-width:60px}
+.btns button.on.d{background:var(--okbg);border-color:var(--ok);color:var(--ok)}
+.btns button.on.f{background:var(--badbg);border-color:var(--bad);color:var(--bad)}
+.btns button.on.n{background:var(--nabg);border-color:var(--na);color:var(--na)}
+.rs{flex:1 0 100%}
+.task.need .rs textarea{border-color:var(--bad)}
+
+/* Banner */
+.banner{border-radius:12px;padding:12px 16px;margin:0 0 20px;background:var(--warnbg);color:var(--warn);font-size:13.5px;display:flex;justify-content:space-between;align-items:center}
+.banner.lock{background:var(--okbg);color:var(--ok)}
+
+/* Footer bar */
+.foot{position:fixed;bottom:0;left:var(--sw);right:0;background:var(--card);border-top:1px solid var(--line);padding:10px 24px;display:flex;gap:16px;align-items:center;z-index:9}
+.foot .prog{flex:1}
+.foot[hidden]{display:none}
+.dc{display:flex;gap:6px;align-items:center}
+
+#toast{position:fixed;left:50%;bottom:80px;transform:translateX(-50%);background:#111;color:#fff;padding:10px 18px;border-radius:10px;opacity:0;pointer-events:none;transition:.25s;z-index:50;font-size:13.5px}
+#toast.show{opacity:.95}
+
+@media (max-width:860px){
+  aside{transform:translateX(-100%)}
+  body.open aside{transform:none}
+  body.open .ov{display:block}
+  .wrap{margin-left:0}
+  .menu{display:inline-flex}
+  .top h2{flex:1 1 60%;font-size:16px}
+  .dc{flex:1 1 100%}
+  .dc input{flex:1}
+  .foot{left:0}
+  main,.top{padding-left:14px;padding-right:14px}
+  .g2{grid-template-columns:1fr}
+}
+@media print{aside,.top,.foot,.btn,.ov{display:none!important}.wrap{margin:0}}
+</style>
+</head>
+<body>
+<aside id="side"></aside>
+<div class="ov" id="ov"></div>
+<div class="wrap">
+  <div class="top" id="top"></div>
+  <main id="app"></main>
+</div>
+<div class="foot" id="foot" hidden></div>
+<div id="toast"></div>
+
+<script type="application/json" id="cl-data">
+{
+  "version": "2026.11.3",
+  "unit": "Khoa Khám bệnh - Bệnh viện Sản Nhi Ninh Bình",
+  "sections": [
+    {"id": "S1", "name": "I. CÔNG TÁC QUẢN LÝ, ĐIỀU HÀNH KHOA"},
+    {"id": "S2", "name": "II. KHU TIẾP ĐÓN, ĐO DẤU HIỆU SINH TỒN (SẢNH TẦNG 1)"},
+    {"id": "S3", "name": "III. KHU KHÁM THEO YÊU CẦU (TẦNG 2)"},
+    {"id": "S4", "name": "IV. KHU PHÒNG KHÁM SẢN - PHỤ KHOA"},
+    {"id": "S5", "name": "V. KHU PHÒNG KHÁM NHI, THỦ THUẬT NHI"},
+    {"id": "S6", "name": "VI. KHU PHÒNG KHÁM CHUYÊN KHOA"},
+    {"id": "S7", "name": "VII. KHU THĂM DÒ CHỨC NĂNG"},
+    {"id": "S8", "name": "VIII. ĐIỀU DƯỠNG HÀNH CHÍNH, ĐIỀU PHỐI, THAY TRỰC"}
+  ],
+  "positions": [
+    {"id": "P01", "sec": "S1", "names": ["Phạm Thị Yến"], "position": "Điều dưỡng trưởng khoa", "slots": [{"time": "07h00 - 07h30", "tasks": ["Đi buồng kiểm tra cùng Lãnh đạo khoa.", "Nắm bắt nhanh quân số nhân lực đi làm, tình hình trang thiết bị, vật tư đầu ngày."], "std": "Có mặt đúng 07h00; nắm chắc quân số và tình hình vận hành các phòng khám."}, {"time": "07h30 - 09h00", "tasks": ["Giám sát trực tiếp trật tự sảnh tiếp đón tầng 1, tầng 2, đón tiếp Sản và Nhi, đo DHST giờ cao điểm.", "Điều phối nhân lực linh hoạt, giải tỏa ùn ứ."], "std": "Không để sảnh ùn tắc quá 10 phút; luồng khám thông suốt."}, {"time": "09h00 - 11h30", "tasks": ["Kiểm tra quy chế chuyên môn, kiểm soát nhiễm khuẩn, phân loại rác thải và thực hiện 5S tại các buồng khám.", "Giám sát tủ thuốc cấp cứu."], "std": "100% buồng khám đạt chuẩn 5S; hộp chống sốc đầy đủ, đúng niêm phong."}, {"time": "13h30 - 15h30", "tasks": ["Duyệt dự trù lĩnh thuốc/vật tư tiêu hao.", "Kiểm tra công tác thủ tục hành chính, giải quyết vướng mắc BHYT, chuyển tuyến."], "std": "Duyệt dự trù kịp thời, chính xác; giải quyết thỏa đáng thắc mắc của người bệnh."}, {"time": "15h30 - 17h00", "tasks": ["Duyệt bảng chấm công, lịch trực ngày hôm sau.", "Rà soát báo cáo giao ban cuối ngày và chỉ số hài lòng người bệnh."], "std": "Số liệu báo cáo ngày chính xác."}]},
+    {"id": "P02", "sec": "S2", "names": ["Nguyễn Thị Hồng Ninh", "Phạm Anh Thư"], "position": "Đo DHST và Sàng lọc", "slots": [{"time": "07h00 - 07h15", "tasks": ["Thực hiện 5S khu vực bàn đo DHST.", "Kiểm tra máy đo SpO2, nhiệt kế, cân đo.", "Bật máy, kiểm tra phân công vị trí trong nhóm tiếp đón."], "std": "Sẵn sàng đón tiếp trước 07h15; thiết bị đo kiểm chuẩn xác."}, {"time": "07h15 - 11h00", "tasks": ["Đo dấu hiệu sinh tồn (Mạch, HA, SpO2, nhiệt độ).", "Sàng lọc nhanh ca cấp cứu.", "Điều phối phân luồng sảnh.", "Đọc điện tim cho sản phụ lúc 10h00 sáng hàng ngày.", "Bảo quản trang thiết bị, máy móc tại PK được giao phụ trách."], "std": "100% ca ưu tiên/cấp cứu được xử trí ngay; phân luồng chính xác phòng khám."}]},
+    {"id": "P03", "sec": "S2", "names": ["Vũ Thị Dung", "Phạm Thị Mai Trang"], "position": "Tiếp đón tầng 1", "slots": [{"time": "07h00 - 07h15", "tasks": ["Thực hiện 5S tại vị trí đón tiếp.", "Bật máy tính, máy in, máy quét CCCD/thẻ BHYT.", "Kiểm tra phôi phiếu khám, giấy in nhiệt."], "std": "Hệ thống CNTT vận hành tốt trước 07h15."}, {"time": "07h15 - 11h00", "tasks": ["Nhập thông tin hành chính, quét CCCD/thẻ BHYT, phân buồng khám chuẩn xác.", "Ưu tiên người già, trẻ sơ sinh, phụ nữ mang thai.", "Giải quyết các vướng mắc bảo hiểm."], "std": "Không sai sót thông tin BHYT; cấp số đúng chuyên khoa."}, {"time": "11h00 - 11h30", "tasks": ["Soát hồ sơ bệnh án ngoại trú buổi sáng: kiểm tra chữ ký BS, mã ICD, bảng kê chi phí trước khi chuyển lưu trữ."], "std": "Hồ sơ đầy đủ tính pháp lý, chữ ký, không sót chứng từ."}, {"time": "13h30 - 16h30", "tasks": ["Tiếp đón ca chiều; hướng dẫn thủ tục chuyển viện, cấp giấy nghỉ việc hưởng BHXH."], "std": "Thủ tục nhanh gọn, đúng chế độ chính sách BHYT."}, {"time": "16h30 - 17h00", "tasks": ["Vệ sinh 5S bàn làm việc.", "Kiểm tra, bảo quản máy quét, máy in; tắt nguồn điện an toàn."], "std": "Bàn làm việc gọn gàng, tắt điện an toàn."}]},
+    {"id": "P04", "sec": "S3", "names": ["Ngô Thị Vân Anh", "Vũ Thị Thúy Liễu"], "position": "Tiếp đón Yêu cầu", "slots": [{"time": "07h00 - 07h15", "tasks": ["Thực hiện 5S tại vị trí đón tiếp.", "Bật máy tính, máy in, máy quét CCCD/thẻ BHYT.", "Kiểm tra giấy in nhiệt."], "std": "Sẵn sàng đón tiếp trước 07h15."}, {"time": "07h15 - 09h00", "tasks": ["Thực hiện 5S quầy tiếp đón YC; đón tiếp, tư vấn gói khám/bảng giá dịch vụ.", "Ép thẻ, làm thủ tục chuyển chế độ nhập viện cho bệnh nhân YC."], "std": "Tư vấn minh bạch, đúng bảng giá; thái độ niềm nở, chu đáo, giải thích cặn kẽ."}, {"time": "09h00 - 11h30", "tasks": ["Tăng cường hỗ trợ đón tiếp tại PK Nhi Yêu cầu 205 + 207."], "std": "Hỗ trợ kịp thời, giảm tải thời gian chờ của bệnh nhi YC."}, {"time": "13h30 - 14h30", "tasks": ["Điều phối luồng khám và đón tiếp bệnh nhân Yêu cầu ca chiều."], "std": "Phân luồng nhanh chóng, chính xác."}, {"time": "14h30 - 15h30", "tasks": ["Tổng hợp và đi đọc kết quả điện tim cho NB tại khu vực Yêu cầu."], "std": "Kết quả kịp thời."}, {"time": "15h30 - 17h00", "tasks": ["Chốt số liệu, khóa sổ tiếp đón YC; kiểm tra bảo quản máy móc thiết bị bàn giao."], "std": "Số liệu khớp hệ thống; thiết bị bàn giao an toàn."}]},
+    {"id": "P05", "sec": "S4", "names": ["Lê Thị Hằng"], "position": "Phòng chạy monitor, điện tim", "slots": [{"time": "07h00 - 07h15", "tasks": ["Thực hiện 5S buồng khám.", "Kiểm tra máy Monitor sản khoa, máy điện tim, đầu dò, giấy in, gel."], "std": "Buồng khám sẵn sàng; thiết bị vận hành tốt."}, {"time": "07h15 - 11h30", "tasks": ["Mắc máy Monitor CTG tim thai và cơn co tử cung đúng kỹ thuật.", "Theo dõi liên tục, báo ngay BS khi có tim thai suy hoặc cơn co bất thường.", "Đo điện tim theo chỉ định."], "std": "Bản ghi CTG rõ nét; báo cáo kịp thời bất thường thai; đảm bảo riêng tư sản phụ."}, {"time": "13h30 - 16h30", "tasks": ["Đảm nhiệm vị trí tiếp đón tại sảnh tầng 1 theo phân công."], "std": "Tiếp đón ca chiều chu đáo, giải quyết thủ tục nhanh."}, {"time": "16h30 - 17h00", "tasks": ["Thực hiện 5S vị trí làm việc.", "Kiểm kê bảo quản trang thiết bị phòng 119.", "Vệ sinh khử khuẩn máy Monitor, dây đai, tắt nguồn máy."], "std": "Thiết bị nguyên vẹn, ngắt điện an toàn."}]},
+    {"id": "P06", "sec": "S4", "names": ["Đồng Thị Bích Thảo"], "position": "PK Phụ khoa 110", "slots": [{"time": "07h00 - 07h15", "tasks": ["Chuẩn bị bàn khám, mỏ vịt vô khuẩn, que lấy dịch, lam kính, găng tay.", "Kiểm tra hộp thuốc cấp cứu/chống sốc."], "std": "Bộ dụng cụ vô khuẩn đạt chuẩn; hộp chống sốc còn hạn, đủ cơ số."}, {"time": "07h15 - 11h15", "tasks": ["Đo HA cho NB; phụ BS khám phụ khoa, soi CTC, lấy mẫu Pap/HPV.", "Thực hiện rửa/đặt thuốc âm đạo đúng kỹ thuật.", "Cho người bệnh quét mã QR thanh toán."], "std": "Thao tác vô khuẩn tuyệt đối; giải thích ân cần; thanh toán QR chính xác."}, {"time": "11h15 - 11h30", "tasks": ["Thu gom mỏ vịt bẩn ngâm dung dịch khử khuẩn đúng nồng độ; phân loại rác thải."], "std": "Ngâm đúng hóa chất và thời gian quy định; không lây nhiễm chéo."}, {"time": "13h30 - 16h30", "tasks": ["Thực hiện nhiệm vụ chuyên môn.", "Phụ giúp BS làm thủ thuật phụ khoa.", "Nhận dụng cụ vô khuẩn từ KSNK."], "std": "Đầy đủ bộ dụng cụ ca chiều."}, {"time": "16h30 - 17h00", "tasks": ["Thực hiện 5S kiểm kê vật tư; khóa tủ thuốc, ngâm khử khuẩn sơ bộ dụng cụ.", "Sắp xếp bàn ghế, xe thủ thuật gọn gàng."], "std": "Phòng ngăn nắp, an toàn."}]},
+    {"id": "P07", "sec": "S4", "names": ["Lương Thị Thu Hà"], "position": "PK Sản Yêu cầu 217 + 218", "slots": [{"time": "07h00 - 07h15", "tasks": ["Thực hiện 5S buồng khám 218 và phòng 217; kiểm tra Doppler tim thai, máy Monitor."], "std": "Sẵn sàng đón tiếp bệnh nhân dịch vụ YC."}, {"time": "07h15 - 11h30", "tasks": ["Đo HA, cân nặng thai phụ; phụ BS khám thai, khám phụ khoa.", "Chạy Monitor tim thai khi có chỉ định; hướng dẫn quét mã QR thanh toán."], "std": "Đo chỉ số chính xác; tư vấn chu đáo; chạy Monitor đúng chuẩn kỹ thuật."}, {"time": "11h30 - 12h00", "tasks": ["Kiểm tra trả kết quả CLS; hướng dẫn sản phụ làm thủ tục nhập viện nếu có chỉ định."], "std": "Hồ sơ chuyển viện đầy đủ, không để sót kết quả."}, {"time": "13h30 - 16h30", "tasks": ["Phụ khám ca chiều; tư vấn dấu hiệu nguy cơ (thai máy yếu, ra nước, ra huyết)."], "std": "100% sản phụ được dặn dò dấu hiệu nguy hiểm rõ ràng."}, {"time": "16h30 - 17h00", "tasks": ["Kiểm kê lại trang thiết bị, máy móc; tắt điện buồng làm việc an toàn."], "std": "Bảo quản máy móc tốt; tắt điện an toàn."}]},
+    {"id": "P08", "sec": "S4", "names": ["Điền Thị Xuân"], "position": "PK Chuyên gia và Tiền sản (P210)", "slots": [{"time": "07h00 - 07h15", "tasks": ["Thực hiện 5S phòng khám chuyên gia và phòng 210; chuẩn bị tài liệu tư vấn tiền sản."], "std": "Buồng khám trang trọng, sạch sẽ, sẵn sàng tài liệu."}, {"time": "07h15 - 11h30", "tasks": ["Đón tiếp ca chuyên gia; tư vấn tiền sản, sàng lọc dị tật (Double, Triple, NIPT).", "Phụ thủ thuật phụ khoa, quét QR thanh toán.", "Quản lý, lưu trữ hồ sơ thai kỳ nguy cơ cao; ngâm rửa dụng cụ bẩn.", "Hoàn thiện các biểu mẫu, DHST trên HSBAĐT.", "Chạy monitor khi có chỉ định."], "std": "Tư vấn chuyên nghiệp, chính xác; NB hài lòng cao."}, {"time": "13h30 - 16h30", "tasks": ["Trả kết quả sàng lọc trước sinh; xếp lịch hội chẩn ca bất thường.", "Chạy monitor khi có chỉ định.", "Đo HA và các DHST, phụ các thủ thuật phụ khoa.", "Hướng dẫn người bệnh quét mã QR thanh toán."], "std": "Trả kết quả tận tình, đúng người bệnh."}, {"time": "16h30 - 17h00", "tasks": ["Kiểm tra bảo quản thiết bị y tế, ngâm khử khuẩn sơ bộ dụng cụ; khóa cửa buồng khám."], "std": "Thiết bị bảo quản an toàn; khóa cửa buồng khám."}]},
+    {"id": "P09", "sec": "S5", "names": ["Lê Thị Vân"], "position": "PK Nhi 102 + 103", "slots": [{"time": "07h00 - 07h15", "tasks": ["Thực hiện 5S buồng khám 102 + 103; chuẩn bị đè lưỡi vô khuẩn, đèn pin, nhiệt kế, ống nghe."], "std": "Sẵn sàng buồng khám; dụng cụ sạch sẽ."}, {"time": "07h15 - 11h30", "tasks": ["Đo cân nặng, nhiệt độ trẻ; phụ BS khám, giữ trẻ an toàn.", "Phối hợp với BS tại 2 PK phụ trách.", "Hướng dẫn người nhà người bệnh làm xét nghiệm/X-quang.", "Rà soát số lượng NB và các xét nghiệm CLS.", "Kiểm tra hồ sơ ngoại trú để đẩy cổng BH đúng thời gian."], "std": "Giữ trẻ chắc chắn, không xảy ra té ngã; đo sinh hiệu chuẩn."}, {"time": "13h30 - 16h30", "tasks": ["Tiếp nhận khám chiều; cập nhật sổ theo dõi bệnh nhi quản lý mạn tính.", "Quản lý bệnh án ngoại trú các mặt bệnh lý tại 2 phòng khám."], "std": "Quản lý hồ sơ bệnh mạn tính chặt chẽ."}, {"time": "16h30 - 17h00", "tasks": ["Kiểm tra máy móc, thiết bị 2 phòng; khóa tủ, ngắt điện hoàn toàn.", "Ngâm khử khuẩn sơ bộ dụng cụ."], "std": "An toàn cháy nổ, buồng khám ngăn nắp."}]},
+    {"id": "P10", "sec": "S5", "names": ["Phạm Thị Ánh Tuyết"], "position": "PK Nhi 104 + 109", "slots": [{"time": "07h00 - 07h15", "tasks": ["Thực hiện 5S buồng khám 104 và 109, lau dọn bề mặt bàn làm việc."], "std": "Buồng khám đạt chuẩn 5S; thiết bị sẵn sàng."}, {"time": "07h15 - 11h30", "tasks": ["Phối hợp cùng BS khám; phát hiện trẻ sốt li bì, co giật để cấp cứu ngay.", "Quản lý hồ sơ ngoại trú các mặt bệnh tại 2 phòng.", "Kiểm tra hồ sơ ngoại trú để đẩy cổng BH đúng thời gian.", "Hướng dẫn người bệnh quét mã QR thanh toán."], "std": "Xử lý kịp thời ca bệnh nặng; phân luồng làm CLS nhanh chóng."}, {"time": "13h30 - 16h30", "tasks": ["Phụ khám ca chiều; hướng dẫn gia đình dùng thuốc theo đơn và lịch tái khám."], "std": "Giải thích đơn thuốc kỹ lưỡng, dặn dò chu đáo."}, {"time": "16h30 - 17h00", "tasks": ["Sắp xếp 5S lại phòng.", "Vệ sinh thiết bị, bảo quản máy móc; tắt máy tính, điều hòa, khóa cửa."], "std": "Bàn giao đủ tài sản, phòng ốc an toàn."}]},
+    {"id": "P11", "sec": "S5", "names": ["Đinh Bảo Ngọc"], "position": "PK Nhi Yêu cầu 205 + 207", "slots": [{"time": "07h00 - 07h15", "tasks": ["Vệ sinh buồng khám 205 và 207; chuẩn bị dụng cụ đo sinh hiệu bệnh nhi dịch vụ."], "std": "Buồng khám sạch đẹp, thoáng mát."}, {"time": "07h15 - 11h30", "tasks": ["Đo nhiệt độ, chiều cao, cân nặng; phụ BS khám; đưa trẻ đi làm CLS nhanh chóng.", "Hướng dẫn người nhà người bệnh làm xét nghiệm/X-quang.", "Thực hiện cho bệnh nhân quét mã QR thanh toán."], "std": "Thái độ niềm nở, chăm sóc chu đáo; thanh toán chính xác."}, {"time": "13h30 - 16h30", "tasks": ["Tiếp nhận khám chiều; tư vấn chế độ dinh dưỡng, theo dõi chăm sóc bé ốm."], "std": "Tư vấn cặn kẽ, tận tình."}, {"time": "16h30 - 17h00", "tasks": ["Kiểm kê vật tư buồng khám, kiểm kê và tắt máy móc."], "std": "Số liệu tài chính chuẩn xác; khóa buồng an toàn."}]},
+    {"id": "P12", "sec": "S5", "names": ["Đào Thị Ánh"], "position": "Phòng Thủ thuật Nhi (P202)", "slots": [{"time": "07h00 - 07h15", "tasks": ["Kiểm tra hệ thống oxy, máy hút đờm dãi, máy khí dung.", "Kiểm tra tủ thuốc cấp cứu, hạn thuốc và hộp chống sốc phản vệ đầu ca."], "std": "Máy móc cấp cứu hoạt động tốt; hộp chống sốc niêm phong đủ cơ số."}, {"time": "07h15 - 11h30", "tasks": ["Thực hiện kỹ thuật hút mũi xoang, vỗ rung ép đờm, khí dung đúng quy trình.", "Thực hiện 5 đúng; nhận dạng đúng NB, theo dõi sát phản ứng trẻ 15-30 phút sau thủ thuật.", "Phối hợp PK Nhi YC 205 + 207 hướng dẫn người nhà người bệnh.", "Tháo rửa, ngâm khử khuẩn sơ bộ bầu khí dung, dây hút, bình chứa dịch."], "std": "Thủ thuật êm dịu, an toàn tuyệt đối cho trẻ; đúng chỉ định y lệnh."}, {"time": "13h30 - 16h30", "tasks": ["Chuẩn bị dụng cụ tiệt khuẩn mới; tiếp tục làm thủ thuật ca chiều.", "Kiểm tra hạn thuốc và bảo quản tủ thuốc phụ trách.", "Tháo rửa, ngâm khử khuẩn sơ bộ bầu khí dung, dây hút, bình chứa dịch."], "std": "Đủ vật tư vô khuẩn phục vụ ca chiều."}, {"time": "16h30 - 17h00", "tasks": ["Kiểm kê cơ số thuốc và vật tư tiêu hao; khóa tủ thuốc, tắt máy hút/khí dung, 5S."], "std": "Không thất thoát thuốc/vật tư; ngắt nguồn an toàn PCCC."}]},
+    {"id": "P13", "sec": "S6", "names": ["Trịnh Thanh Phúc"], "position": "PK Ngoại 108 và KTV Bó bột", "slots": [{"time": "07h00 - 07h15", "tasks": ["Thực hiện 5S bàn tiểu phẫu, phòng bó bột; kiểm tra thạch cao, nẹp, bột thủy tinh, băng gạc, kéo.", "Kiểm tra tủ thuốc và hạn dùng thuốc được giao phụ trách."], "std": "Sẵn sàng buồng phẫu thuật/bó bột; tủ thuốc hạn dùng an toàn."}, {"time": "07h15 - 11h30", "tasks": ["Phụ BS khám ngoại chấn thương; thực hiện bó bột, nẹp cố định, tháo bột theo y lệnh.", "Thay băng vô khuẩn vết mổ, cắt chỉ.", "Quản lý bệnh án ngoại trú và đẩy cổng BHXH đúng quy định.", "Vệ sinh bồn rửa thạch cao; ngâm kéo, dụng cụ tiểu phẫu bẩn đúng hóa chất."], "std": "Bó bột đúng kỹ thuật giải phẫu, không chèn ép mạch; đẩy cổng BHXH đúng hạn."}, {"time": "13h30 - 16h30", "tasks": ["Khám ngoại, tháo bột, thay băng ca chiều; hướng dẫn gia đình chăm sóc bột tại nhà.", "Thực hiện nhiệm vụ chuyên môn theo phân công."], "std": "Hướng dẫn cẩn thận dấu hiệu chèn ép bột."}, {"time": "16h30 - 17h00", "tasks": ["Bảo quản máy móc trang thiết bị; niêm phong tủ thuốc ngoại trú, khóa cửa."], "std": "Thiết bị và tủ thuốc được bảo quản niêm phong an toàn."}]},
+    {"id": "P14", "sec": "S6", "names": ["Nguyễn Thị Hằng Nga", "Bùi Khắc Hưng"], "position": "PK Tai Mũi Họng 107", "slots": [{"time": "07h00 - 07h15", "tasks": ["Thực hiện 5S vị trí làm việc.", "Khởi động dàn máy nội soi TMH; chuẩn bị optic, nguồn sáng, màn hình, gạc ấm, thuốc tê."], "std": "Dàn máy nội soi sẵn sàng hoạt động."}, {"time": "07h15 - 11h30", "tasks": ["Giữ trẻ đúng tư thế an toàn khi nội soi; phụ BS nội soi cho trẻ.", "Phụ BS làm các thủ thuật tại PK TMH (lấy dị vật, hút mủ, làm thuốc tai, xịt rửa mũi họng,...).", "Khử khuẩn optic giữa các lượt khám.", "Vệ sinh máy hút TMH.", "Kiểm tra đẩy hồ sơ ngoại trú cổng BHXH đúng thời gian.", "Đánh kết quả nội soi TMH để trả kết quả cho người bệnh nhanh chóng, chính xác."], "std": "Giữ trẻ đúng, không gây chấn thương; optic vô khuẩn giữa các lượt."}, {"time": "13h30 - 16h30", "tasks": ["Tiếp tục phụ nội soi và thủ thuật chiều; sẵn sàng hỗ trợ kíp bột ngoại khoa.", "Đánh kết quả nội soi TMH để trả kết quả cho người bệnh nhanh chóng, chính xác."], "std": "Phối hợp nhịp nhàng, thông suốt."}, {"time": "16h30 - 17h00", "tasks": ["Lau khử khuẩn dây optic; tắt dàn máy đúng quy trình, ghi nhật ký thiết bị.", "Ngâm khử khuẩn sơ bộ dụng cụ.", "Thực hiện 5S phòng khám."], "std": "Dàn máy được bảo quản đúng chuẩn kỹ thuật."}]},
+    {"id": "P15", "sec": "S6", "names": ["Hoàng Thị Ngọc Hà", "Nguyễn Đình Đức"], "position": "PK Tai Mũi Họng Yêu cầu", "slots": [{"time": "07h00 - 07h15", "tasks": ["Thực hiện 5S buồng khám TMH YC; khởi động hệ thống nội soi; chuẩn bị que bông, thuốc nhỏ."], "std": "Buồng khám dịch vụ sẵn sàng."}, {"time": "07h15 - 11h30", "tasks": ["Giữ trẻ đúng tư thế an toàn khi nội soi; phụ BS nội soi cho trẻ.", "Phụ BS làm các thủ thuật tại PK TMH (lấy dị vật, hút mủ, làm thuốc tai, xịt rửa mũi họng,...).", "Khử khuẩn optic giữa các lượt khám; vệ sinh máy hút TMH.", "Kiểm tra đẩy hồ sơ ngoại trú cổng BHXH đúng thời gian.", "Đánh kết quả nội soi TMH để trả kết quả cho người bệnh nhanh chóng, chính xác.", "Ngâm rửa optic bằng dung dịch khử khuẩn chuyên dụng đúng thời gian quy định."], "std": "Nội soi an toàn; khử khuẩn optic chuẩn; thanh toán QR chính xác."}, {"time": "13h30 - 16h30", "tasks": ["Tiếp tục phụ nội soi và các thủ thuật TMH ca chiều; đánh máy và trả kết quả kịp thời, chính xác.", "Tư vấn, hướng dẫn phụ huynh cách chăm sóc, vệ sinh tai mũi họng cho trẻ sau can thiệp."], "std": "Phục vụ chu đáo, thao tác chuẩn xác, người bệnh hài lòng."}, {"time": "16h30 - 17h00", "tasks": ["Kiểm tra bảo quản optic và hệ thống máy nội soi TMH YC; vệ sinh phòng khám.", "Lau khử khuẩn dây optic; tắt dàn máy đúng quy trình, ghi nhật ký thiết bị.", "Ngâm khử khuẩn sơ bộ dụng cụ.", "Thực hiện 5S phòng khám."], "std": "Bảo quản thiết bị cẩn thận; tắt nguồn điện an toàn."}]},
+    {"id": "P16", "sec": "S6", "names": ["Nguyễn Thị Thủy"], "position": "PK Răng Hàm Mặt, Mắt (PK 106 + 120)", "slots": [{"time": "07h00 - 07h15", "tasks": ["Thực hiện 5S buồng khám 106; bật máy ghế răng, sinh hiển vi khám mắt, bảng thị lực."], "std": "Hệ thống ghế răng, máy soi mắt hoạt động chuẩn."}, {"time": "07h15 - 11h30", "tasks": ["Đo thị lực; phụ BS làm thủ thuật bệnh lý về Răng + Mắt (nhổ răng sữa, lấy dị vật mắt).", "Kiểm tra hồ sơ ngoại trú của 2 buồng khám để đẩy cổng BHXH đúng thời gian.", "Ngâm kìm nhổ răng, bẩy răng, dụng cụ mắt vào dung dịch tiệt khuẩn ban đầu."], "std": "Thủ thuật an toàn; không lây nhiễm chéo; đẩy cổng BHXH đúng hạn."}, {"time": "13h30 - 16h30", "tasks": ["Nhận dụng cụ vô khuẩn từ KSNK; tiếp tục phụ khám RHM và Mắt ca chiều."], "std": "Đầy đủ bộ dụng cụ vô khuẩn ca chiều."}, {"time": "16h30 - 17h00", "tasks": ["Thực hiện 5S vị trí làm việc.", "Lau dọn máy móc, thiết bị.", "Ngâm khử khuẩn dụng cụ."], "std": "Bảo dưỡng máy đúng kỹ thuật, tắt điện an toàn."}]},
+    {"id": "P17", "sec": "S7", "names": ["Hà Thị Thanh Thảo"], "position": "Phòng Điện não đồ và Điện tim Nhi", "slots": [{"time": "07h00 - 07h15", "tasks": ["Thực hiện 5S phòng máy; bật máy ghi điện não (EEG); chuẩn bị mũ điện cực, gel dẫn điện."], "std": "Máy tính và máy ghi EEG sẵn sàng."}, {"time": "07h15 - 11h30", "tasks": ["Đón tiếp trẻ; hướng dẫn mẹ dỗ bé ngủ; gắn điện cực EEG đúng sơ đồ 10-20 quốc tế.", "Thực hiện điện não cho trẻ và điện tim cho bệnh nhân Nhi theo chỉ định.", "Đẩy kết quả của BN điện não lên hệ thống PACS."], "std": "Bản ghi sóng não rõ, không nhiễu; đẩy PACS 100% ca đo kịp thời."}, {"time": "13h30 - 16h30", "tasks": ["Tiếp tục đo điện não cho các ca chiều; in trả kết quả về phòng khám Nhi."], "std": "In trả đầy đủ kết quả, đúng hẹn."}, {"time": "16h30 - 17h00", "tasks": ["Tắt máy điện não đúng quy trình hệ thống phần mềm; lưu trữ dữ liệu; ghi sổ máy.", "Vệ sinh lau dọn máy."], "std": "Lưu trữ dữ liệu đầy đủ; tắt máy an toàn."}]},
+    {"id": "P18", "sec": "S7", "names": ["Trịnh Thị Thảo"], "position": "Phòng đo OAE (Âm ốc tai)", "slots": [{"time": "07h00 - 07h15", "tasks": ["Thực hiện 5S phòng đo; kiểm tra máy đo OAE cầm tay, pin sạc, các kích cỡ đầu tip mềm."], "std": "Máy OAE hoạt động chính xác; pin đầy đủ."}, {"time": "07h15 - 11h30", "tasks": ["Thực hiện đo thính lực cho trẻ đúng quy trình (làm sạch ống tai, gắn tip vừa khít, đo âm ốc tai sơ sinh).", "Giải thích ý nghĩa kết quả sàng lọc thính lực cho phụ huynh.", "Vệ sinh khử khuẩn các đầu tip tai; in và trả kết quả cho gia đình."], "std": "Đo đúng kỹ thuật, kết quả chuẩn xác; tư vấn rõ ràng."}, {"time": "13h30 - 16h30", "tasks": ["Tiếp tục đo OAE cho trẻ ca chiều; cập nhật sổ theo dõi sàng lọc khiếm thính."], "std": "Ghi chép sổ sách đầy đủ, chính xác."}, {"time": "16h30 - 17h00", "tasks": ["Vệ sinh máy OAE, cắm sạc pin; bảo quản máy trong hộp chống ẩm; khóa buồng.", "Thực hiện 5S vị trí làm việc."], "std": "Bảo quản máy đo cẩn thận; khóa cửa an toàn."}]},
+    {"id": "P19", "sec": "S8", "names": ["Lê Thị Thu"], "position": "Điều dưỡng Hành chính khoa", "slots": [{"time": "07h00 - 09h00", "tasks": ["Tham gia hỗ trợ tiếp đón sảnh Sản (Cửa 4+5) giải tỏa áp lực bệnh nhân đông đầu giờ sáng."], "std": "Có mặt đúng giờ; giải tỏa nhanh lượng sản phụ chờ khám."}, {"time": "09h00 - 11h30", "tasks": ["Lĩnh thuốc bù các tủ trực/tủ cấp cứu; lĩnh VTTH phân phát về các phòng khám.", "Hướng dẫn bệnh nhân ngoại trú thanh toán ra viện.", "Đóng dấu Giấy ra viện, Tích kê CLS đối với BN BHYT chuyển xét nghiệm sang BV đa khoa tỉnh NB.", "Đưa BN nặng đi làm CLS, chuyển BN lên các khoa.", "Kiểm tra đối chiếu số lượng bệnh nhân chuyển viện, nhập viện trong sáng."], "std": "Lĩnh/phát vật tư đúng định mức; chuyển BN nặng an toàn 100%; đóng dấu chính xác pháp lý."}, {"time": "13h30 - 15h30", "tasks": ["Kiểm soát hạn dùng thuốc, hóa chất dự trữ tại tủ hành chính khoa.", "Đưa dụng cụ, trang thiết bị hỏng đến các phòng để sửa chữa theo biên bản."], "std": "Không để thuốc/VTTH quá hạn; thiết bị hỏng được xử lý kịp thời."}, {"time": "15h30 - 17h00", "tasks": ["Thống kê tổng hợp số liệu khám chữa bệnh trong ngày (tổng khám, nhập viện, chuyển tuyến, YC).", "Lập báo cáo ngày gửi ĐDT và Trưởng khoa."], "std": "Số liệu báo cáo chính xác, khớp HIS; hoàn thành trước 16h45."}]},
+    {"id": "P20", "sec": "S8", "names": ["Lê Thị Lan Anh"], "position": "Tiếp đón BN Sản & Phụ trách Hành chính", "slots": [{"time": "07h00 - 07h15", "tasks": ["Thực hiện 5S khu vực tiếp đón Sản (Cửa 4+5).", "Khởi động hệ thống máy tính, máy in, máy quét thẻ CCCD/BHYT.", "Kiểm tra sẵn sàng phôi phiếu khám, giấy in nhiệt."], "std": "Hệ thống vận hành tốt, sẵn sàng tiếp đón trước 07h15."}, {"time": "07h15 - 09h00", "tasks": ["Trực tiếp tiếp đón bệnh nhân Sản tại Cửa 4+5 sảnh tầng 1.", "Quét CCCD/thẻ BHYT, kiểm tra thông tin hành chính, phân buồng khám chuẩn xác.", "Ưu tiên sản phụ chuyển dạ, thai nghén nguy cơ; giải tỏa ùn ứ giờ cao điểm."], "std": "Tiếp đón niềm nở, thao tác nhanh, không để sản phụ chờ lâu; cấp số đúng chuyên khoa."}, {"time": "09h00 - 11h30", "tasks": ["Phụ trách công tác hành chính khoa: hỗ trợ lĩnh/phát VTTH, văn phòng phẩm.", "Hướng dẫn bệnh nhân hoàn thiện thủ tục ra viện/chuyển viện.", "Hỗ trợ đưa bệnh nhân nặng đi làm cận lâm sàng hoặc chuyển lên khoa điều trị."], "std": "Phối hợp công việc hành chính nhịp nhàng, chính xác; chuyển bệnh an toàn 100%."}, {"time": "13h30 - 16h30", "tasks": ["Đảm nhiệm công tác hành chính ca chiều: hoàn thiện sổ sách, rà soát hồ sơ bệnh án ngoại trú, chứng từ BHYT.", "Hỗ trợ kiểm tra cơ số và hạn dùng thuốc, vật tư tiêu hao tại tủ hành chính."], "std": "Hồ sơ, chứng từ đầy đủ tính pháp lý; số liệu đối chiếu chuẩn xác."}, {"time": "16h30 - 17h00", "tasks": ["Thực hiện 5S vị trí làm việc.", "Phối hợp tổng hợp số liệu khám chữa bệnh trong ngày, bàn giao sổ sách/thiết bị.", "Tắt máy tính, ngắt nguồn điện an toàn trước khi ra về."], "std": "Bàn làm việc ngăn nắp, số liệu bàn giao đầy đủ, tắt điện an toàn."}]},
+    {"id": "P21", "sec": "S8", "names": ["Trần Ngọc Huyền"], "position": "Điều dưỡng thay vị trí trực / Dự phòng", "slots": [{"time": "07h00 - 07h15", "tasks": ["Nhận phân công điều động từ Điều dưỡng trưởng khoa theo lịch trực cụ thể trong ngày."], "std": "Nhận nhiệm vụ chủ động, đúng giờ."}, {"time": "07h15 - 11h30", "tasks": ["Thay thế vị trí người nghỉ trực; thực hiện đầy đủ nhiệm vụ chuyên môn và checklist tại vị trí được giao.", "Thực hiện 5S tại vị trí, bảo quản trang thiết bị máy móc buồng phụ trách."], "std": "Thực hiện chuẩn quy trình tại vị trí thay trực; bảo quản tốt máy móc."}, {"time": "13h30 - 16h30", "tasks": ["Tiếp tục ca chiều tại vị trí được phân công; hỗ trợ tiếp đón hoặc chuyển BN nặng khi có yêu cầu đột xuất."], "std": "Linh hoạt, đáp ứng ngay khi có yêu cầu đột xuất."}, {"time": "16h30 - 17h00", "tasks": ["Thực hiện 5S, kiểm kê tài sản và ký bàn giao sổ sách buồng làm việc trước khi rời ca."], "std": "Ký bàn giao sổ sách đầy đủ, tắt điện buồng làm việc."}]}
+  ]
+}
+</script>
+
+<script>
+let DB = JSON.parse(document.getElementById('cl-data').textContent);
+let dt = new Date().toISOString().split('T')[0];
+let view = 'rep'; 
+let myPos = null;
+
+let repFrom = '2026-11-02';
+let repTo = new Date().toISOString().split('T')[0];
+
+function gk(d){ return 'kkb_v3_' + d; }
+function getStForDate(d){
+  try{ return JSON.parse(localStorage.getItem(gk(d))) || {}; }catch(e){ return {}; }
+}
+
+function toast(m){
+  let t = document.getElementById('toast');
+  t.textContent = m;
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'), 2500);
+}
+
+function fmtDate(d){
+  let p = d.split('-');
+  return p.length === 3 ? p[2] + '/' + p[1] + '/' + p[0] : d;
+}
+
+function init(){
+  renderSide();
+  renderTop();
+  renderMain();
+  renderFoot();
+}
+
+function renderSide(){
+  let html = `
+    <div class="brand">
+      <div class="logo">✓</div>
+      <div>
+        <b>Checklist KKB</b>
+        <small>BV Sản Nhi Ninh Bình</small>
+      </div>
+    </div>
+    <div class="grp">NHÂN VIÊN</div>
+    <button class="nav ${view==='chk'?'on':''}" onclick="setView('chk')">
+      <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+      Checklist của tôi
+    </button>
+    <div class="grp">QUẢN LÝ & GIÁM SÁT</div>
+    <button class="nav ${view==='dash'?'on':''}" onclick="setView('dash')">
+      <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
+      Dashboard thống kê
+    </button>
+    <button class="nav ${view==='mon'?'on':''}" onclick="setView('mon')">
+      <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      Giám sát theo vị trí
+    </button>
+    <button class="nav ${view==='reassign'?'on':''}" onclick="setView('reassign')">
+      <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>
+      Phân công thay trực
+    </button>
+    <button class="nav ${view==='rep'?'on':''}" onclick="setView('rep')">
+      <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+      Báo cáo & Xuất Excel
+    </button>
+    <div class="grp">ĐỒNG BỘ DỮ LIỆU</div>
+    <button class="nav ${view==='sync'?'on':''}" onclick="setView('sync')">
+      <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.73-5.73"/></svg>
+      Sao lưu & Nhập JSON
+    </button>
+    <div class="sf">
+      <div><b>Khoa Khám bệnh</b></div>
+      <div style="opacity:.75">Ngày: ${fmtDate(dt)}</div>
+    </div>
+  `;
+  document.getElementById('side').innerHTML = html;
+}
+
+function renderTop(){
+  let titles = {
+    chk: 'Checklist công việc cá nhân',
+    dash: 'Dashboard thống kê hoạt động chi tiết',
+    mon: 'Giám sát tiến độ & Phê duyệt vị trí',
+    reassign: 'Quản lý phân công thay trực',
+    rep: 'Báo cáo tổng hợp & Xuất dữ liệu',
+    sync: 'Sao lưu & Đồng bộ dữ liệu JSON'
+  };
+  let html = `
+    <button class="btn menu" onclick="toggleAside()">☰ Menu</button>
+    <h2>${titles[view] || 'Quản lý Checklist'}</h2>
+    <div class="dc">
+      <button class="btn ib" onclick="shiftDate(-1)">&lt;</button>
+      <input type="date" value="${dt}" onchange="dt=this.value;init()">
+      <button class="btn ib" onclick="shiftDate(1)">&gt;</button>
+      <button class="btn" onclick="setToday()">Hôm nay</button>
+    </div>
+  `;
+  document.getElementById('top').innerHTML = html;
+}
+
+function toggleAside(){
+  document.body.classList.toggle('open');
+  let ov = document.getElementById('ov');
+  ov.style.display = document.body.classList.contains('open') ? 'block' : 'none';
+  ov.onclick = () => { document.body.classList.remove('open'); ov.style.display='none'; };
+}
+
+function setView(v){
+  view = v;
+  document.body.classList.remove('open');
+  let ov = document.getElementById('ov');
+  if(ov) ov.style.display = 'none';
+  init();
+}
+
+function shiftDate(n){
+  let d = new Date(dt);
+  d.setDate(d.getDate() + n);
+  dt = d.toISOString().split('T')[0];
+  init();
+}
+
+function setToday(){
+  dt = new Date().toISOString().split('T')[0];
+  init();
+}
+
+function renderMain(){
+  let el = document.getElementById('app');
+  if(view === 'chk') el.innerHTML = buildChecklistView();
+  else if(view === 'dash') el.innerHTML = buildDashboardView();
+  else if(view === 'mon') el.innerHTML = buildMonitorView();
+  else if(view === 'reassign') el.innerHTML = buildReassignView();
+  else if(view === 'rep') el.innerHTML = buildReportView();
+  else if(view === 'sync') el.innerHTML = buildSyncView();
+}
+
+// 1. Checklist cá nhân
+function buildChecklistView(){
+  let posOpts = '<option value="">— Chọn vị trí / Tên nhân viên —</option>';
+  DB.positions.forEach(p => {
+    let namesStr = p.names.join(' & ');
+    posOpts += `<option value="${p.id}" ${myPos===p.id?'selected':''}>${p.position} (${namesStr})</option>`;
+  });
+
+  let html = `
+    <div class="card">
+      <h4 class="t">Chọn vị trí công tác của bạn</h4>
+      <select onchange="myPos=this.value;renderMain()" style="width:100%;max-width:480px">${posOpts}</select>
+    </div>
+  `;
+
+  if(!myPos){
+    html += `<div class="card"><p class="mut">Vui lòng chọn vị trí công tác ở khung phía trên để hiển thị checklist công việc chi tiết trong ngày ${fmtDate(dt)}.</p></div>`;
+    return html;
+  }
+
+  let pObj = DB.positions.find(x => x.id === myPos);
+  let secObj = DB.sections.find(s => s.id === pObj.sec);
+  let st = getStForDate(dt);
+
+  html += `
+    <div class="card">
+      <span class="pill">${secObj.name}</span>
+      <h3 style="margin-top:8px">${pObj.position}</h3>
+      <p class="mut">Nhân sự phụ trách: <b>${pObj.names.join(', ')}</b></p>
+  `;
+
+  pObj.slots.forEach((slot, sIdx) => {
+    html += `
+      <div class="slot">
+        <h4>⏰ Khung giờ: ${slot.time}</h4>
+        <div class="std"><b>Tiêu chuẩn:</b> ${slot.std}</div>
+    `;
+    slot.tasks.forEach((tsk, tIdx) => {
+      let key = `${pObj.id}_${sIdx}_${tIdx}`;
+      let val = st[key] || {};
+      let score = val.sc || ''; 
+      let note = val.nt || '';
+
+      html += `
+        <div class="task ${score==='f'&&!note?'need':''}">
+          <div class="tt">
+            <div>• ${tsk}</div>
+          </div>
+          <div class="btns">
+            <button class="${score==='d'?'on d':''}" onclick="setTask('${key}','d')">Đạt</button>
+            <button class="${score==='f'?'on f':''}" onclick="setTask('${key}','f')">Không đạt</button>
+            <button class="${score==='n'?'on n':''}" onclick="setTask('${key}','n')">KAD</button>
+          </div>
+          <div class="rs" ${score==='f'?'':'style="display:none"'}>
+            <textarea placeholder="Nhập lý do không đạt / giải trình bắt buộc..." onchange="setNote('${key}',this.value)">${note}</textarea>
+          </div>
+        </div>
+      `;
+    });
+    html += `</div>`;
+  });
+
+  html += `</div>`;
+  return html;
+}
+
+function setTask(key, sc){
+  let st = getStForDate(dt);
+  if(!st[key]) st[key] = {};
+  if(st[key].sc === sc){
+    delete st[key].sc;
+  } else {
+    st[key].sc = sc;
+  }
+  localStorage.setItem(gk(dt), JSON.stringify(st));
+  renderMain();
+  renderFoot();
+}
+
+function setNote(key, nt){
+  let st = getStForDate(dt);
+  if(!st[key]) st[key] = {};
+  st[key].nt = nt;
+  localStorage.setItem(gk(dt), JSON.stringify(st));
+  renderFoot();
+}
+
+function computeStats(){
+  let st = getStForDate(dt);
+  let total = 0, d = 0, f = 0, n = 0;
+  DB.positions.forEach(p => {
+    p.slots.forEach((sl, sIdx) => {
+      sl.tasks.forEach((ts, tIdx) => {
+        total++;
+        let k = `${p.id}_${sIdx}_${tIdx}`;
+        if(st[k]){
+          if(st[k].sc === 'd') d++;
+          else if(st[k].sc === 'f') f++;
+          else if(st[k].sc === 'n') n++;
+        }
+      });
+    });
+  });
+  let done = d + f + n;
+  let pct = total > 0 ? Math.round((done / total) * 100) : 0;
+  let rateOk = done > 0 ? Math.round((d / done) * 100) : 0;
+  return {total, d, f, n, done, pct, rateOk, un: total - done};
+}
+
+// 2. Dashboard
+function buildDashboardView(){
+  let s = computeStats();
+  let st = getStForDate(dt);
+  let approvedCount = 0;
+  DB.positions.forEach(p => {
+    if(st['appr_' + p.id]) approvedCount++;
+  });
+
+  let failedTasks = [];
+  DB.positions.forEach(p => {
+    p.slots.forEach((sl, sIdx) => {
+      sl.tasks.forEach((ts, tIdx) => {
+        let k = `${p.id}_${sIdx}_${tIdx}`;
+        if(st[k] && st[k].sc === 'f'){
+          failedTasks.push({
+            pos: p.position,
+            names: p.names.join(', '),
+            time: sl.time,
+            task: ts,
+            note: st[k].nt || '(Chưa có giải trình)'
+          });
+        }
+      });
+    });
+  });
+
+  return `
+    <div class="kpis">
+      <div class="kpi" style="--c:var(--pri)">
+        <span>Tiến độ hoàn thành</span>
+        <b>${s.pct}%</b>
+        <small>${s.done}/${s.total} đầu việc đã chấm</small>
+      </div>
+      <div class="kpi" style="--c:var(--ok)">
+        <span>Tỷ lệ đạt chuẩn</span>
+        <b>${s.rateOk}%</b>
+        <small>${s.d} đầu việc đạt</small>
+      </div>
+      <div class="kpi" style="--c:var(--bad)">
+        <span>Không đạt</span>
+        <b>${s.f}</b>
+        <small>cần khắc phục ngay</small>
+      </div>
+      <div class="kpi" style="--c:var(--warn)">
+        <span>Chưa thực hiện</span>
+        <b>${s.un}</b>
+        <small>đầu việc tồn đọng</small>
+      </div>
+      <div class="kpi" style="--c:#3b82f6">
+        <span>Vị trí đã phê duyệt</span>
+        <b>${approvedCount}/21</b>
+        <small>khoa phòng</small>
+      </div>
+    </div>
+
+    <div class="g2">
+      <div class="card">
+        <h3>Cơ cấu kết quả ngày ${fmtDate(dt)}</h3>
+        <p class="mut" style="margin-bottom:16px">Phân bổ tỷ trọng các trạng thái thực hiện nhiệm vụ</p>
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <div>
+            <div style="display:flex;justify-content:space-between;font-size:13.5px;margin-bottom:5px">
+              <span>Đạt chuẩn (${s.d})</span><span><b>${s.done>0?Math.round(s.d/s.done*100):0}%</b></span>
+            </div>
+            <div class="sb"><i style="width:${s.done>0?(s.d/s.done*100):0}%;background:var(--ok)"></i></div>
+          </div>
+          <div>
+            <div style="display:flex;justify-content:space-between;font-size:13.5px;margin-bottom:5px">
+              <span>Không đạt (${s.f})</span><span><b>${s.done>0?Math.round(s.f/s.done*100):0}%</b></span>
+            </div>
+            <div class="sb"><i style="width:${s.done>0?(s.f/s.done*100):0}%;background:var(--bad)"></i></div>
+          </div>
+          <div>
+            <div style="display:flex;justify-content:space-between;font-size:13.5px;margin-bottom:5px">
+              <span>Không áp dụng / KAD (${s.n})</span><span><b>${s.done>0?Math.round(s.n/s.done*100):0}%</b></span>
+            </div>
+            <div class="sb"><i style="width:${s.done>0?(s.n/s.done*100):0}%;background:var(--na)"></i></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Tiến độ hoàn thành theo 8 Tiểu ban chuyên môn</h3>
+        <p class="mut" style="margin-bottom:16px">Tỷ lệ triển khai công việc theo các khu vực trong khoa</p>
+        <div style="display:flex;flex-direction:column;gap:10px">
+          ${DB.sections.map(sec => {
+            let secPos = DB.positions.filter(p => p.sec === sec.id);
+            let sTot=0, sDone=0;
+            secPos.forEach(p => {
+              p.slots.forEach((sl, sIdx) => {
+                sl.tasks.forEach((ts, tIdx) => {
+                  sTot++;
+                  let k = `${p.id}_${sIdx}_${tIdx}`;
+                  let stObj = st[k];
+                  if(stObj && stObj.sc) sDone++;
+                });
+              });
+            });
+            let pcts = sTot > 0 ? Math.round(sDone/sTot*100) : 0;
+            return `
+              <div>
+                <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:3px">
+                  <span><b>${sec.name}</b></span><span><b>${pcts}%</b> (${sDone}/${sTot})</span>
+                </div>
+                <div class="prog"><i style="width:${pcts}%"></i></div>
+              </div>
+            `;
+          }).join('')}
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>⚠️ Danh sách đầu việc Không đạt & Giải trình cần xử lý (${failedTasks.length})</h3>
+      <p class="mut" style="margin-bottom:14px">Tổng hợp các nhiệm vụ chưa đạt tiêu chuẩn trong ngày ${fmtDate(dt)}</p>
+      ${failedTasks.length === 0 ? '<p style="color:var(--ok);font-weight:600;padding:10px 0">Tuyệt vời! Không có đầu việc nào bị đánh giá không đạt trong ngày hôm nay.</p>' : `
+        <div class="tw">
+          <table>
+            <thead>
+              <tr>
+                <th>Vị trí / Nhân sự</th>
+                <th>Khung giờ</th>
+                <th>Nội dung đầu việc</th>
+                <th>Lý do không đạt / Giải trình</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${failedTasks.map(ft => `
+                <tr>
+                  <td><b>${ft.pos}</b><br><small style="color:var(--mut)">${ft.names}</small></td>
+                  <td><span class="pill na">${ft.time}</span></td>
+                  <td>${ft.task}</td>
+                  <td><span style="color:var(--bad);font-weight:600">${ft.note}</span></td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>
+      `}
+    </div>
+  `;
+}
+
+// 3. Giám sát & Phê duyệt
+function buildMonitorView(){
+  let st = getStForDate(dt);
+  let approvedAll = true;
+  DB.positions.forEach(p => {
+    if(!st['appr_' + p.id]) approvedAll = false;
+  });
+
+  let html = `
+    <div class="banner ${approvedAll?'lock':''}" style="margin-bottom:20px">
+      <div>
+        <b>Trạng thái phê duyệt ngày ${fmtDate(dt)}:</b> ${approvedAll ? 'Đã khóa sổ và phê duyệt toàn bộ 21 vị trí.' : 'Đang trong quá trình thực hiện và giám sát.'}
+      </div>
+      <button class="btn ${approvedAll?'':'fill'}" onclick="toggleApproveAll()">${approvedAll ? 'Mở khóa tất cả' : 'Phê duyệt & Khóa sổ ngày'}</button>
+    </div>
+  `;
+
+  DB.sections.forEach(sec => {
+    let secPos = DB.positions.filter(p => p.sec === sec.id);
+    let secTot=0, secDone=0, secD=0, secF=0;
+    secPos.forEach(p => {
+      p.slots.forEach((sl, sIdx) => {
+        sl.tasks.forEach((ts, tIdx) => {
+          secTot++;
+          let k = `${p.id}_${sIdx}_${tIdx}`;
+          let val = st[k];
+          if(val && val.sc){
+            secDone++;
+            if(val.sc === 'd') secD++;
+            if(val.sc === 'f') secF++;
+          }
+        });
+      });
+    });
+    let secPct = secTot > 0 ? Math.round(secDone/secTot*100) : 0;
+
+    html += `
+      <div class="card">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:8px">
+          <div>
+            <h3 style="margin:0">${sec.name}</h3>
+            <span class="mut">Tiến độ khu vực: <b>${secPct}%</b> (${secDone}/${secTot} đầu việc)</span>
+          </div>
+          <div class="prog" style="width:150px"><i style="width:${secPct}%"></i></div>
+        </div>
+        <div class="tw">
+          <table>
+            <thead>
+              <tr>
+                <th>Vị trí công tác</th>
+                <th>Nhân sự</th>
+                <th>Tiến độ</th>
+                <th>Đạt</th>
+                <th>Không đạt</th>
+                <th>Chưa làm</th>
+                <th>Phê duyệt</th>
+                <th>Thao tác</th>
+              </tr>
+            </thead>
+            <tbody>
+    `;
+
+    secPos.forEach(p => {
+      let pTot=0, pD=0, pF=0, pDone=0;
+      p.slots.forEach((sl, sIdx) => {
+        sl.tasks.forEach((ts, tIdx) => {
+          pTot++;
+          let k = `${p.id}_${sIdx}_${tIdx}`;
+          let val = st[k];
+          if(val && val.sc){
+            pDone++;
+            if(val.sc === 'd') pD++;
+            if(val.sc === 'f') pF++;
+          }
+        });
+      });
+      let pPcts = pTot > 0 ? Math.round(pDone/pTot*100) : 0;
+      let isAppr = !!st['appr_' + p.id];
+
+      html += `
+        <tr>
+          <td><b>${p.position}</b></td>
+          <td>${p.names.join(', ')}</td>
+          <td style="width:140px">
+            <div style="display:flex;align-items:center;gap:6px">
+              <div class="prog" style="flex:1"><i style="width:${pPcts}%"></i></div>
+              <span style="font-size:12px">${pPcts}%</span>
+            </div>
+          </td>
+          <td><span class="pill ok">${pD}</span></td>
+          <td><span class="pill ${pF>0?'bad':'na'}">${pF}</span></td>
+          <td><span class="pill na">${pTot - pDone}</span></td>
+          <td>
+            <button class="btn ib ${isAppr?'ok':''}" onclick="toggleApprPos('${p.id}')">${isAppr ? '✓ Đã duyệt' : 'Duyệt'}</button>
+          </td>
+          <td><button class="btn ib" onclick="jumpToPos('${p.id}')">Chi tiết</button></td>
+        </tr>
+      `;
+    });
+
+    html += `</tbody></table></div></div>`;
+  });
+
+  return html;
+}
+
+function jumpToPos(id){
+  myPos = id;
+  setView('chk');
+}
+
+function toggleApprPos(id){
+  let st = getStForDate(dt);
+  let k = 'appr_' + id;
+  st[k] = !st[k];
+  localStorage.setItem(gk(dt), JSON.stringify(st));
+  renderMain();
+  toast(st[k] ? 'Đã phê duyệt vị trí!' : 'Đã hủy duyệt vị trí.');
+}
+
+function toggleApproveAll(){
+  let st = getStForDate(dt);
+  let approvedAll = true;
+  DB.positions.forEach(p => {
+    if(!st['appr_' + p.id]) approvedAll = false;
+  });
+  DB.positions.forEach(p => {
+    st['appr_' + p.id] = !approvedAll;
+  });
+  localStorage.setItem(gk(dt), JSON.stringify(st));
+  renderMain();
+  toast(approvedAll ? 'Đã mở khóa toàn bộ khoa!' : 'Đã phê duyệt và khóa sổ toàn bộ khoa!');
+}
+
+// 4. Phân công thay trực
+function buildReassignView(){
+  let reassignKey = 'kkb_reassign_' + dt;
+  let reassignList = [];
+  try{ reassignList = JSON.parse(localStorage.getItem(reassignKey)) || []; }catch(e){ reassignList = []; }
+
+  let posOpts = DB.positions.map(p => `<option value="${p.position}">${p.position} (${p.names.join(', ')})</option>`).join('');
+
+  return `
+    <div class="card">
+      <h3>Đăng ký điều động / Thay trực trong ngày ${fmtDate(dt)}</h3>
+      <p class="mut" style="margin-bottom:16px">Ghi nhận các trường hợp đổi ca, tăng cường hoặc thay thế nhân sự trực</p>
+      
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-bottom:14px">
+        <div>
+          <label style="font-size:13px;font-weight:600;display:block;margin-bottom:4px">Vị trí trực</label>
+          <select id="re_pos" style="width:100%">${posOpts}</select>
+        </div>
+        <div>
+          <label style="font-size:13px;font-weight:600;display:block;margin-bottom:4px">Nhân sự nghỉ (vắng mặt)</label>
+          <input type="text" id="re_off" placeholder="Nhập tên nhân sự nghỉ..." style="width:100%">
+        </div>
+        <div>
+          <label style="font-size:13px;font-weight:600;display:block;margin-bottom:4px">Nhân sự thay thế (trực thay)</label>
+          <input type="text" id="re_on" placeholder="Nhập tên nhân sự thay trực..." style="width:100%">
+        </div>
+      </div>
+      <div style="margin-bottom:16px">
+        <label style="font-size:13px;font-weight:600;display:block;margin-bottom:4px">Lý do điều động / Ghi chú</label>
+        <input type="text" id="re_note" placeholder="Ví dụ: Nghỉ phép, đi học, tăng cường sảnh đông..." style="width:100%">
+      </div>
+      <button class="btn fill" onclick="addReassign()">+ Thêm phân công thay trực</button>
+    </div>
+
+    <div class="card">
+      <h3>Danh sách thay trực đã ghi nhận (${reassignList.length})</h3>
+      ${reassignList.length === 0 ? '<p class="mut" style="padding:10px 0">Chưa có bản ghi thay trực nào trong ngày hôm nay.</p>' : `
+        <div class="tw">
+          <table>
+            <thead>
+              <tr>
+                <th>STT</th>
+                <th>Vị trí công tác</th>
+                <th>Nhân sự nghỉ</th>
+                <th>Nhân sự thay trực</th>
+                <th>Lý do / Ghi chú</th>
+                <th>Thao tác</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${reassignList.map((r, idx) => `
+                <tr>
+                  <td><b>#${idx+1}</b></td>
+                  <td><b>${r.pos}</b></td>
+                  <td><span style="color:var(--bad)">${r.off}</span></td>
+                  <td><span style="color:var(--ok);font-weight:600">${r.on}</span></td>
+                  <td>${r.note}</td>
+                  <td><button class="btn ib bad" onclick="removeReassign(${idx})">Xóa</button></td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>
+      `}
+    </div>
+  `;
+}
+
+function addReassign(){
+  let pos = document.getElementById('re_pos').value;
+  let off = document.getElementById('re_off').value.trim();
+  let on = document.getElementById('re_on').value.trim();
+  let note = document.getElementById('re_note').value.trim();
+  if(!off || !on){
+    toast('Vui lòng nhập đầy đủ nhân sự nghỉ và nhân sự thay trực!');
+    return;
+  }
+  let reassignKey = 'kkb_reassign_' + dt;
+  let list = [];
+  try{ list = JSON.parse(localStorage.getItem(reassignKey)) || []; }catch(e){}
+  list.push({pos, off, on, note});
+  localStorage.setItem(reassignKey, JSON.stringify(list));
+  renderMain();
+  toast('Đã ghi nhận phân công thay trực thành công!');
+}
+
+function removeReassign(idx){
+  let reassignKey = 'kkb_reassign_' + dt;
+  let list = [];
+  try{ list = JSON.parse(localStorage.getItem(reassignKey)) || []; }catch(e){}
+  list.splice(idx, 1);
+  localStorage.setItem(reassignKey, JSON.stringify(list));
+  renderMain();
+  toast('Đã xóa bản ghi thay trực.');
+}
+
+// 5. Báo cáo tổng hợp
+function getDatesInRange(start, end) {
+  let arr = [];
+  let dtStart = new Date(start);
+  let dtEnd = new Date(end);
+  while (dtStart <= dtEnd) {
+    arr.push(new Date(dtStart).toISOString().split('T')[0]);
+    dtStart.setDate(dtStart.getDate() + 1);
+  }
+  return arr;
+}
+
+function buildReportView(){
+  let dates = getDatesInRange(repFrom, repTo);
+  let totalDaysWithData = 0;
+  
+  let posStats = {};
+  DB.positions.forEach(p => {
+    posStats[p.id] = { evaluated: 0, okCount: 0, failCount: 0, missingReason: 0 };
+  });
+
+  let grandTotalEval = 0;
+  let grandTotalOk = 0;
+  let grandTotalFail = 0;
+  let grandTotalMissing = 0;
+
+  dates.forEach(d => {
+    let st = getStForDate(d);
+    let dayHasData = false;
+    DB.positions.forEach(p => {
+      p.slots.forEach((sl, sIdx) => {
+        sl.tasks.forEach((ts, tIdx) => {
+          let k = `${p.id}_${sIdx}_${tIdx}`;
+          if(st[k] && st[k].sc){
+            dayHasData = true;
+            posStats[p.id].evaluated++;
+            grandTotalEval++;
+            if(st[k].sc === 'd' || st[k].sc === 'n'){
+              posStats[p.id].okCount++;
+              grandTotalOk++;
+            } else if(st[k].sc === 'f'){
+              posStats[p.id].failCount++;
+              grandTotalFail++;
+              if(!st[k].nt || st[k].nt.trim() === ''){
+                posStats[p.id].missingReason++;
+                grandTotalMissing++;
+              }
+            }
+          }
+        });
+      });
+    });
+    if(dayHasData) totalDaysWithData++;
+  });
+
+  let overallPct = grandTotalEval > 0 ? Math.round((grandTotalOk / grandTotalEval) * 100) : 0;
+
+  return `
+    <div class="card" style="margin-bottom:16px">
+      <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:8px">
+        <div class="dc">
+          <span style="font-size:13px;font-weight:600">Từ</span>
+          <input type="date" id="rep_from" value="${repFrom}" onchange="repFrom=this.value;renderMain()">
+          <span style="font-size:13px;font-weight:600">đến</span>
+          <input type="date" id="rep_to" value="${repTo}" onchange="repTo=this.value;renderMain()">
+        </div>
+        <button class="btn fill" onclick="exportReportExcelRange()">Xuất CSV (Excel)</button>
+      </div>
+      <div class="mut" style="font-size:12.5px">Chỉ tính các ngày có ghi nhận dữ liệu (${totalDaysWithData} ngày).</div>
+    </div>
+
+    <div class="kpis">
+      <div class="kpi" style="--c:var(--pri)">
+        <span>Hoàn thành toàn khoa</span>
+        <b>${grandTotalEval}</b>
+        <small>đầu việc đã đánh giá</small>
+      </div>
+      <div class="kpi" style="--c:var(--ok)">
+        <span>Tỷ lệ đạt</span>
+        <b>${grandTotalEval > 0 ? overallPct + '%' : '—'}</b>
+        <small>${grandTotalOk} đạt / ${grandTotalEval}</small>
+      </div>
+      <div class="kpi" style="--c:var(--bad)">
+        <span>Không đạt</span>
+        <b>${grandTotalFail}</b>
+        <small>đầu việc không đạt</small>
+      </div>
+      <div class="kpi" style="--c:var(--warn)">
+        <span>Thiếu lý do</span>
+        <b>${grandTotalMissing}</b>
+        <small>cần bổ sung giải trình</small>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="tw">
+        <table>
+          <thead>
+            <tr>
+              <th>Vị trí</th>
+              <th style="text-align:center">Đã đánh giá</th>
+              <th style="text-align:center">Tỷ lệ đạt</th>
+              <th style="text-align:center">Không đạt</th>
+              <th style="text-align:center">Thiếu lý do</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${DB.positions.map(p => {
+              let st = posStats[p.id];
+              let pRate = st.evaluated > 0 ? Math.round((st.okCount / st.evaluated) * 100) + '%' : '—';
+              return `
+                <tr>
+                  <td><b>${p.position}</b> <span style="color:var(--mut);font-weight:normal">${p.names.join(', ')}</span></td>
+                  <td style="text-align:center">${st.evaluated > 0 ? st.evaluated : '—'}</td>
+                  <td style="text-align:center">${pRate}</td>
+                  <td style="text-align:center"><span class="pill ${st.failCount>0?'bad':'na'}">${st.failCount}</span></td>
+                  <td style="text-align:center"><span class="pill ${st.missingReason>0?'bad':'na'}">${st.missingReason}</span></td>
+                </tr>
+              `;
+            }).join('')}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  `;
+}
+
+function exportReportExcelRange(){
+  let dates = getDatesInRange(repFrom, repTo);
+  let csv = "\uFEFFSTT,Vị trí công tác,Nhân sự,Đã đánh giá,Tỷ lệ đạt,Không đạt,Thiếu lý do\n";
+  DB.positions.forEach((p, idx) => {
+    let evaluated = 0, okCount = 0, failCount = 0, missingReason = 0;
+    dates.forEach(d => {
+      let st = getStForDate(d);
+      p.slots.forEach((sl, sIdx) => {
+        sl.tasks.forEach((ts, tIdx) => {
+          let k = `${p.id}_${sIdx}_${tIdx}`;
+          if(st[k] && st[k].sc){
+            evaluated++;
+            if(st[k].sc === 'd' || st[k].sc === 'n') okCount++;
+            else if(st[k].sc === 'f'){
+              failCount++;
+              if(!st[k].nt || st[k].nt.trim() === '') missingReason++;
+            }
+          }
+        });
+      });
+    });
+    let pRate = evaluated > 0 ? Math.round((okCount / evaluated) * 100) + '%' : '0%';
+    csv += `${idx+1},"${p.position}","${p.names.join(', ')}",${evaluated},${pRate},${failCount},${missingReason}\n`;
+  });
+  let blob = new Blob([csv], {type: 'text/csv;charset=utf-8;'});
+  let url = URL.createObjectURL(blob);
+  let a = document.createElement('a');
+  a.href = url;
+  a.download = `Bao_cao_tong_hop_${repFrom}_den_${repTo}.csv`;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  toast('Đã xuất báo cáo CSV thành công!');
+}
+
+// 6. Sao lưu & Nhập JSON (Hợp nhất dữ liệu thông minh không lo mất dữ liệu)
+function buildSyncView(){
+  return `
+    <div class="card">
+      <h3>📤 Xuất toàn bộ dữ liệu (Sao lưu JSON)</h3>
+      <p class="mut" style="margin-bottom:16px">Tải xuống toàn bộ lịch sử chấm checklist, phê duyệt và phân công thay trực của tất cả các ngày dưới dạng một file JSON để gửi cho người tổng hợp.</p>
+      <button class="btn fill" onclick="exportFullJSON()">📥 Tải xuống file sao lưu (.json)</button>
+    </div>
+
+    <div class="card">
+      <h3>📥 Nhập dữ liệu từ file khác (Hợp nhất thông minh)</h3>
+      <p class="mut" style="margin-bottom:16px">Chọn file sao lưu (.json) do nhân viên gửi tới. Hệ thống sẽ <b>gộp thêm dữ liệu mới</b> vào kho sẵn có trên máy của bác sĩ chứ <b>không ghi đè hay làm mất dữ liệu hiện tại</b>.</p>
+      
+      <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+        <input type="file" id="importFile" accept=".json" style="padding:6px">
+        <button class="btn ok" onclick="importFullJSON()">⚡ Nạp & Gộp dữ liệu vào hệ thống</button>
+      </div>
+    </div>
+  `;
+}
+
+function exportFullJSON(){
+  let backupData = {};
+  for(let i=0; i<localStorage.length; i++){
+    let key = localStorage.key(i);
+    if(key.startsWith('kkb_v3_') || key.startsWith('kkb_reassign_')){
+      backupData[key] = localStorage.getItem(key);
+    }
+  }
+  let jsonStr = JSON.stringify(backupData, null, 2);
+  let blob = new Blob([jsonStr], {type: 'application/json;charset=utf-8;'});
+  let url = URL.createObjectURL(blob);
+  let a = document.createElement('a');
+  a.href = url;
+  a.download = `Checklist_KKB_SaoLuu_${new Date().toISOString().split('T')[0]}.json`;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  toast('Đã tải xuống file sao lưu JSON thành công!');
+}
+
+function importFullJSON(){
+  let fileInput = document.getElementById('importFile');
+  if(!fileInput.files || fileInput.files.length === 0){
+    toast('Vui lòng chọn file .json trước khi nạp!');
+    return;
+  }
+  let file = fileInput.files[0];
+  let reader = new FileReader();
+  reader.onload = function(e){
+    try{
+      let importedData = JSON.parse(e.target.result);
+      let count = 0;
+      for(let key in importedData){
+        if(key.startsWith('kkb_v3_')){
+          // SMART MERGE LOGIC: Merge checklist items key-by-key for each date
+          let currentRaw = localStorage.getItem(key);
+          let currentObj = currentRaw ? JSON.parse(currentRaw) : {};
+          let importedObj = typeof importedData[key] === 'string' ? JSON.parse(importedData[key]) : importedData[key];
+          
+          let mergedObj = Object.assign({}, currentObj, importedObj);
+          localStorage.setItem(key, JSON.stringify(mergedObj));
+          count++;
+        } else if(key.startsWith('kkb_reassign_')){
+          // SMART MERGE LOGIC: Merge reassign lists without duplicates
+          let currentRaw = localStorage.getItem(key);
+          let currentList = currentRaw ? JSON.parse(currentRaw) : [];
+          let importedList = typeof importedData[key] === 'string' ? JSON.parse(importedData[key]) : importedData[key];
+          
+          let mergedList = [...currentList];
+          if(Array.isArray(importedList)){
+            importedList.forEach(item => {
+              if(!mergedList.some(x => x.pos===item.pos && x.off===item.off && x.on===item.on)){
+                mergedList.push(item);
+              }
+            });
+          }
+          localStorage.setItem(key, JSON.stringify(mergedList));
+          count++;
+        }
+      }
+      toast(`Đã gộp thành công dữ liệu từ file vào hệ thống!`);
+      setTimeout(()=>renderMain(), 800);
+    }catch(err){
+      toast('Lỗi: File JSON không đúng định dạng!');
+    }
+  };
+  reader.readAsText(file);
+}
+
+function renderFoot(){
+  let f = document.getElementById('foot');
+  if(view !== 'chk' || !myPos){
+    f.hidden = true;
+    return;
+  }
+  let pObj = DB.positions.find(x => x.id === myPos);
+  let st = getStForDate(dt);
+  let tot=0, done=0;
+  pObj.slots.forEach((sl, sIdx) => {
+    sl.tasks.forEach((ts, tIdx) => {
+      tot++;
+      let k = `${pObj.id}_${sIdx}_${tIdx}`;
+      if(st[k] && st[k].sc) done++;
+    });
+  });
+  let pct = tot > 0 ? Math.round(done/tot*100) : 0;
+  f.hidden = false;
+  f.innerHTML = `
+    <span>Tiến độ vị trí: <b>${done}/${tot} (${pct}%)</b></span>
+    <div class="prog"><i style="width:${pct}%"></i></div>
+    <button class="btn fill ib" onclick="toast('Đã lưu và xác nhận hoàn thành checklist!')">Xác nhận hoàn thành</button>
+  `;
+}
+
+window.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>
